@@ -4,4 +4,5 @@
     const DB_NAME="angular";
     const DB_USER="root";
     const DB_PASS="";
+    const DB_PORT="3306";
 ?>

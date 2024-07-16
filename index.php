@@ -2,36 +2,32 @@
      require_once "./config/app.php";
      require_once "./autoload.php";
      require_once "./app/views/inc/session_start.php";
+     if(isset($_GET['views'])){
+        $url = explode("/", $_GET['views']);
+    }else{
+        $url = ["login"];
+    }
 ?>
 <!DOCTYPE html>
-<html lang="es" ng-app="crudAngular">
+<html lang="es">
     <head>
         <?php require_once "./app/views/inc/head.php";?>
     </head>
-    <body ng-controller="mainController">
-        <div class="login-box">
-        <form class="">
-            <div class="title">
-                <h2>Login Form</h2>
-            </div>
-            <div class="user-box">
-            <input type="email" name="" required="">
-            <label>Email</label>
-            </div>
-            <div class="user-box">
-            <input type="password" name="" required="">
-            <label>Password</label>
-            </div>
-            <center>
-            <button type="submit"><a type="submit">LOGIN<span></span></a></button>  
-            <a class="sign-up" href="#/register">SIGN UP<span></span></a>
-            </center>
-        </form>
-        <div ng-view></div> 
-        </div>
-       
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
-        <script src="./app/controllers/controller.js"></script>
-    </body>
+    <body>
+    
+    <?php
+    #Configuracion y redirección de vistas dependen de si existe o no en la URL.
+        use app\controllers\viewsController;
+        $viewsController = new viewsController();
+        $vista=$viewsController->obtenerVistasController($url[0]);
+        if ($vista == "login" || $vista == "error" || $vista == "register"){
+            require_once "./app/views/content/".$vista.".php";
+        }else {
+            require_once "./app/views/inc/navbar.php";
+            require_once $vista;
+        }
+        #Se implementan los scripts del archivo.
+        require_once "./app/views/inc/script.php";
+    ?>
+</body>
 </html>
