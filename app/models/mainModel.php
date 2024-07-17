@@ -1,30 +1,32 @@
 <?php
     namespace app\models;
     use \PDO;
+    use PDOException;
+
     #Confirmación del archivo server.php
     if(file_exists(__DIR__."/../../config/server.php")){
         require_once __DIR__."/../../config/server.php";
     }
     #Modelo principal para la conexión a la base de datos.
     class mainModel{ 
-        private $server = DB_SERVER;
-        private $db_name = DB_NAME;
-        private $db_user = DB_USER;
-        private $db_pass = DB_PASS;
+        const db_server = DB_SERVER;
+        const db_name = DB_NAME;
+        const db_user = DB_USER;
+        const db_pass = DB_PASS;
+        private static $datos = [];
         #Función para conectar la base de datos.
-        protected function conect(){
-            $conn = new PDO("mysql:host=".$this->server.";dbname=".$this->db_name, $this->db_user, $this->db_pass);
-            $conn->exec("SET CHARACTER SET utf8");
-            return $conn;
-        }
-        #Función para hacer consultas a la base de datos.
-        protected function ejecutar($consulta){
-            $sql =$this->conect()->prepare($consulta);
-            $sql->execute();
-            return $sql;
+        public static function connect(){
+            try{
+                $conn = new PDO("mysql:host=".self::db_server.";dbname=".self::db_name, self::db_user, self::db_pass);
+                $conn->exec("SET CHARACTER SET utf8");
+                $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+                return $conn;
+            }catch(PDOException $e){
+                return "fallo ".$e->getMessage();
+            }
         }
         #(1mer filtro) Función para evitar inyecciones SQL - Listando palabras que no son permitidas.
-        public function cleanString($cadena){
+        public static function cleanString($cadena){
             $palabras=["<script>","</script>", "<script src","<script type=","<style>", "</style>","<form>", "<input>", "<button>", '<meta http-equiv="refresh"',"<img src=x onerror=alert(",
                         "<iframe src=x onload=alert(", "<object type=application/x-shockwave-flash>", "<embed src=x onerror=alert(",'<img src="','<img onerror="','<link href="','onload="',
                         'onmouseover="','onfocus="','onblur="','onclick="', "SELECT * FROM", "DELETE FROM", "INSERT INTO", "DROP TABLE", "DROP DATABASE", "TRUNCATE TABLE","SHOW TABLES",
@@ -39,7 +41,7 @@
             return $cadena;     
         }
         #(2do filtro) Funcion para filtrar la cadena de texto sobre una expresión regular donde se limita la entrada de datos.
-        protected function verificarData($filtro, $cadena){
+        protected static function verificarData($filtro, $cadena){
             if(preg_match("/^".$filtro."$/",$cadena)){
                 return false;
             }else{
@@ -47,6 +49,54 @@
             }
         }
 
-        
+        /* ------------------------------------------------------------------------------------- */
+        public static function insertar($tabla, $data){
+            try {
+                $conn = self::connect();
+                $columns = implode(',', array_keys($data));
+                $values = implode(',', array_map(function($value) use ($conn) {
+                    return $conn->quote($value);
+                    }, $data));
+                    $consul = "INSERT INTO ". $tabla ." (".$columns.") VALUES (".$values.")";
+                    $result = $conn->query($consul);
+                     if($result){
+                    return true;
+                    } else {
+                     return false;
+                     }
+                    } catch (PDOException $e) {
+                    return "fallo ".$e->getMessage();
+                    }
+        }
+        public static function mostrar($tabla, $condicion){
+            $conn = mainModel::connect();
+            $condicionEscapada = $conn->quote($condicion);
+            $consulta = "SELECT * FROM ".$tabla." WHERE ".$condicionEscapada.";";
+            $resultado = $conn->query($consulta);
+            while($filas =$resultado->fetchAll(PDO::FETCH_ASSOC)){
+                self::$datos[] = $filas;
+            }
+            return self::$datos;
+        }
+        public static function actualizar($tabla, $data, $condicion){
+            $conn = mainModel::connect();
+            $consult ="UPDATE ". $tabla." SET ". $data ." WHERE ".$condicion;
+            $result= $conn->query($consult);
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public static function eliminar($tabla, $condicion){
+            $conn = mainModel::connect();
+            $eli="DELETE FROM ".$tabla." WHERE ".$condicion;
+            $res=$conn->query($eli);
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 ?>
