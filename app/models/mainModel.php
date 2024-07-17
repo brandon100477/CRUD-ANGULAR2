@@ -98,5 +98,22 @@
                 return false;
             }
         }
+        public static function getHashedPasswordByEmail($email) {
+            $conn = self::connect();
+            $stmt = $conn->prepare("SELECT * FROM person WHERE email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+        
+            if ($stmt->rowCount() > 0) {
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $data = [
+                    'name' => $row['name'],
+                    'pass' => $row['password']
+                ];
+                return $data; // Devuelve la contraseña encriptada
+            } else {
+                return null; // No se encontró el usuario
+            }
+        }
     }
 ?>

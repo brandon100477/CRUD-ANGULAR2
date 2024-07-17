@@ -1,4 +1,10 @@
-<!-- Dashboard -->
+<?php
+    session_start();
+    if (!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
+        header('Location:'. APP_URL); // Redirige al usuario a la página de login
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +15,7 @@
 </head>
 <body>
     <div class="ini">
-        <h1>Bienvenido, ha accedido correctamente.</h1>
+    <h1>Bienvenido, <?php echo htmlspecialchars($_SESSION['name']); ?></h1>
         <img class="img-inicio" src="./app/static/img/programanding.png" alt="">
         <p>Prueba realizada con éxito</p>
     </div>
