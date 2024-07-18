@@ -1,0 +1,47 @@
+table {
+    min-width: 50%;
+    max-width: 80%;
+    border-collapse: collapse;
+    margin: auto auto;
+    margin-top: 80px;
+}
+
+th, td {
+    width: auto;
+    padding: 10px 15px 5px 10px;
+    border: 1px solid #ddd;
+    color: black;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+}
+th {
+    background-color: #263a92;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+.acciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.acciones button {
+    padding: 4px 8px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.actualizar {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.eliminar {
+    background-color: #dc3545;
+    color: #fff;
+}

@@ -1,7 +1,6 @@
 var routing = angular.module('routingApp',['ngRoute'])
 
 routing.config(['$routeProvider', function($routeProvider) {
-    const absolutePath = location.origin + location.pathname;
     $routeProvider
       .when('/userNew', { templateUrl: './app/views/content/userNew.php' })
       .when('/userList', { templateUrl: './app/views/content/userList.php' })
@@ -56,4 +55,17 @@ routing.controller('registerController', function ($scope, $http) {
             });
           });
       };
+    });
+    routing.controller('listController', function ($scope, $http) {
+        $scope.users = [];
+        console.log("Entra aqui");
+        $scope.fetchUsers = function() {
+            
+            $http.get('./app/controllers/listController.php')
+                .then(function(response) {
+                    $scope.users = response.data; // Asigna los datos recibidos a la variable users
+                }, function(error) {
+                    console.error("Error fetching users:", error);
+                });
+        };
     });

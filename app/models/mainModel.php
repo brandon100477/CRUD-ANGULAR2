@@ -68,10 +68,9 @@
                     return "fallo ".$e->getMessage();
                     }
         }
-        public static function mostrar($tabla, $condicion){
+        public static function mostrar($tabla){
             $conn = mainModel::connect();
-            $condicionEscapada = $conn->quote($condicion);
-            $consulta = "SELECT * FROM ".$tabla." WHERE ".$condicionEscapada.";";
+            $consulta = "SELECT * FROM ".$tabla.";";
             $resultado = $conn->query($consulta);
             while($filas =$resultado->fetchAll(PDO::FETCH_ASSOC)){
                 self::$datos[] = $filas;
