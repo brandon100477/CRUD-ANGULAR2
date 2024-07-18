@@ -22,7 +22,6 @@
         if ($vista == "login" || $vista == "error" || $vista == "register"){
             require_once "./app/views/content/".$vista.".php";
         }else {
-            require_once "./app/views/inc/navbar.php";
             require_once $vista;
         }
         #Se implementan los scripts del archivo.
