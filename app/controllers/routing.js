@@ -70,7 +70,38 @@ routing.controller('registerController', function ($scope, $http) {
             title: 'Advertencia',
             text: 'Estas apunto de eliminar el dato: ' + itemId,
             confirmButtonText: 'Si, por favor.'
-        })
+        }).then((result) => {
+          if (result.isConfirmed) {
+              console.log('ID del elemento a eliminar:', itemId);
+              
+              $http.post('./app/controllers/deleteController.php', itemId)
+              .then(function(response) {
+                if (response.data.status === 'success') {
+                  Swal.fire({
+                      icon: "success",
+                      title: "Éxito",
+                      text: response.data.message,
+                  }).then(() => {
+                    // Recargar la página después de cerrar la alerta de éxito
+                    window.location.reload();
+                  });
+              } else {
+                  Swal.fire({
+                      icon: "error",
+                      title: "Error",
+                      text: response.data.message,
+                  });
+              }
+              }, function(error) {
+                console.error("Error:", error);
+                Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Ha ocurrido un error al enviar los datos.",
+                });
+              });
+          }
+      });
         }
     });
     routing.controller('preUpdateController',['$scope','$http', '$routeParams', function ($scope, $http, $routeParams) {

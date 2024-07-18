@@ -121,7 +121,7 @@
         }
         public static function eliminar($tabla, $condicion){
             $conn = mainModel::connect();
-            $eli="DELETE FROM ".$tabla." WHERE ".$condicion;
+            $eli="DELETE FROM ".$tabla." WHERE ".$condicion.";";
             $res=$conn->query($eli);
             if($res){
                 return true;
