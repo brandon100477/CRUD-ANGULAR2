@@ -13,18 +13,18 @@
         try {
             $tabla = 'person';
             $condicion = "id = " . intval($id); 
-    
+            //Se llama al modelo para eliminar datos.
             $result = mainModel::eliminar($tabla, $condicion);
             if ($result === true) {
                 echo json_encode(['status' => 'success', 'message' => 'Dato eliminado correctamente']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Error al eliminar el dato: ' . $result]);
             }
-        } catch (Exception $e) {
+        } catch (Exception $e) { //Manejo de errores.
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         } 
     } else {
-        http_response_code(405); // Método no permitido
+        http_response_code(405); // Método no permitido.
         echo json_encode(['status' => 'error', 'message' => 'Método HTTP no permitido']);
     }
 ?>

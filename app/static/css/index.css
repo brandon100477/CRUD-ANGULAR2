@@ -159,3 +159,21 @@ body,html {
   color: #00b509;
   padding-bottom: 50px;
  }
+ /* ---------------------------------------------------------------- Select ------------------------------------------- */
+ select {
+  width: 100%;
+  background-color: #181818;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  appearance: none; /* Elimina estilos predeterminados del navegador */
+  -webkit-appearance: none; /* Para Safari */
+  -moz-appearance: none; /* Para Firefox */
+  font-size: 15px;
+}
+
+select option {
+  background-color: #181818;
+  color: white;
+}

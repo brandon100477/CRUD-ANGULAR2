@@ -1,6 +1,6 @@
 (function() {
   var app = angular.module('crudAngular', []);
-
+//Controlador para registrar datos.
   app.controller('mainController', function ($scope, $http) {
     $scope.submitForm = function() {
       if (!$scope.name || !$scope.email || !$scope.pass || !$scope.pass2 || $scope.pass2 !== $scope.pass) {
@@ -19,7 +19,7 @@
         pass: $scope.pass,
         pet: $scope.pet
       };
-      
+      //Petición al controlador php y manejo de errores.
       $http.post('./app/controllers/registerController.php', formData)
         .then(function(response) {
           if (response.data.status === 'success') {
@@ -28,7 +28,7 @@
                 title: "Éxito",
                 text: response.data.message,
             }).then(() => {
-              // Recargar la página después de cerrar la alerta de éxito
+              // Recargar la página después de cerrar la alerta de éxito y así registrar otro dato.
               window.location.reload();
             });
         } else {

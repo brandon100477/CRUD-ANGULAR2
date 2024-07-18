@@ -3,7 +3,6 @@
     use app\models\mainModel;
     require_once __DIR__ . '/../models/mainModel.php';
 
-
     header('Content-Type: application/json');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -11,12 +10,13 @@
         $data = json_decode(file_get_contents('php://input'), true);
         $model = new mainModel();
 
-        $name = mainModel::cleanString($data['name']);
+        // Limpieza de los datos para evitar inyecciones SQL.
+        $name = mainModel::cleanString($data['name']); 
         $email = mainModel::cleanString($data['email']);
         $pass = password_hash(mainModel::cleanString($data['pass']), PASSWORD_BCRYPT);// Encriptar la contraseña
         $pet =  mainModel::cleanString($data['pet']);
 
-        $insertData = [
+        $insertData = [ //Diccionario de datos limpios.
             'name' => $name,
             'email' => $email,
             'password' => $pass,
@@ -27,7 +27,7 @@
             ];
         $tabla = 'person';
         $result = mainModel::insertar($tabla, $insertData);
-        // Ejemplo de respuesta basada en algún criterio
+        // Respuesta basada en algún criterio.
         if ($result === true) {
              echo json_encode(['status' => 'success', 'message' => 'Datos registrados correctamente']);
             } else {

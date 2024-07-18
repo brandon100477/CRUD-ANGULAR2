@@ -9,9 +9,8 @@ use Exception;
     $model = new mainModel();
     try{
         $listData = mainModel::mostrar("person");
-        error_log(print_r($listData, true)); // Agrega esto para depurar
-        echo json_encode($listData);
-    }catch(Exception $e){
+        echo json_encode($listData); // Envio de lista de datos
+    }catch(Exception $e){ // Controlador de errores.
         error_log($e->getMessage());
         http_response_code(500);
         echo json_encode(["status" => "error", "message" => "An error occurred"]);

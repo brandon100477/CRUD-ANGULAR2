@@ -15,7 +15,7 @@
             $email = $model->cleanString($data['email']);
             $pet =  $model->cleanString($data['pet']);
     
-            $updateData = [
+            $updateData = [ //Diciconario de datos para ectualizar datos.
                 'name' => $name,
                 'email' => $email,
                 'pet' => $pet,
@@ -25,7 +25,7 @@
             $tabla = 'person';
             $condicion = "id = " . intval($data['id']); 
     
-            $result = mainModel::actualizar($tabla, $updateData, $condicion);
+            $result = mainModel::actualizar($tabla, $updateData, $condicion); //Llamado al modelo para actualziar.
             if ($result === true) {
                 echo json_encode(['status' => 'success', 'message' => 'Datos actualizados correctamente']);
             } else {

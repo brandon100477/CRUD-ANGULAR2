@@ -108,4 +108,31 @@
   .container-button:active::before {
     filter: blur(0.2em);
   }
-  
+    /* ---------------------------------------------------------------- Select ------------------------------------------- */
+ .user-box{
+  margin-top: -25px;
+ }
+ 
+  select {
+  margin-right: 30px;
+  width: 320px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: solid 1px #8d8d8d;
+  border-radius: 8px;
+  padding: 10px;
+  appearance: none; /* Elimina estilos predeterminados del navegador */
+  -webkit-appearance: none; /* Para Safari */
+  -moz-appearance: none; /* Para Firefox */
+  font-size: 15px;
+}
+
+select option {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+}
+.aux {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}

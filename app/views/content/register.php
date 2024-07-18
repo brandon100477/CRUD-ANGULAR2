@@ -1,8 +1,6 @@
 <?php
      require_once "./config/app.php";
      require_once "./autoload.php";
-     require_once "./app/views/inc/session_start.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="es" ng-app="crudAngular">
@@ -19,7 +17,7 @@
             <div class="user-box" ng-class="{ 'error': !name.length }">
                 <input type="text" name="name" ng-model="name" required>
                 <label>Name</label>
-                <span class="span" ng-show="!name.length">Por favor ingresar tu nombre.</span>
+                <span  ng-show="!name.length">Por favor ingresar tu nombre.</span>
             </div><br>
             <div class="user-box" ng-class="{ 'error': !email.length }">
                 <input type="email" name="email" ng-model="email" required maxlength="50">
@@ -38,9 +36,14 @@
                 <span ng-show="pass2.length && pass2 !== pass">Lo siento, las contraseñas no coinciden.</span>
             </div><br>
             <div class="user-box" ng-class="{ 'error': !pet.length }">
-                <input type="text" name="pet" ng-model="pet" required>
-                <label>Pet</label>
-                <span ng-show="!pet.length">Escribe el tipo de mascota que tienes.</span>
+                <select name="pet" ng-model="pet" id="pet">
+                    <option value="">Seleccine una mascota</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Loro">Loro</option>
+                    <option value="Pez">Pez</option>
+                </select><br>
+                <span ng-show="!pet.length">Seleccione el tipo de mascota que tienes.</span>
             </div><br>
             <center>
             <button type="submit" name="registro" disabled ng-disabled="!name.length || !email.length || !pass.length || !pass2.length || pass2 !== pass"><p class="sign-up aux">LOGIN<span></span></p></button>

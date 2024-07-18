@@ -109,4 +109,21 @@
   .form .close {
     display: none;
   }
-  
+  /* ---------------------------------------------------------------- Select ------------------------------------------- */
+ select {
+  width: 100%;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: solid 1px #8d8d8d;
+  border-radius: 8px;
+  padding: 10px;
+  appearance: none; /* Elimina estilos predeterminados del navegador */
+  -webkit-appearance: none; /* Para Safari */
+  -moz-appearance: none; /* Para Firefox */
+  font-size: 15px;
+}
+
+select option {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}

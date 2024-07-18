@@ -15,10 +15,16 @@
                             <input required="" type="email" name="email" ng-model="user[0][0].email" class="input">
                             <label class="label">Email</label>
                         </div>
-                        <div class="container">
-                            <input required="" type="text" name="pet"  ng-model="user[0][0].pet" class="input">
-                            <label class="label">Pet</label>
-                        </div>
+                        <div class="user-box" ng-model="user[0][0].pet">
+                            <p class="aux">Actualice la mascota</p>
+                            <select name="pet" id="pet" ng-model="user[0][0].pet">
+                                <option value="user[0][0].pet">{{user[0][0].pet}}</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Perro">Perro</option>
+                                <option value="Loro">Loro</option>
+                                <option value="Pez">Pez</option>
+                            </select><br>
+                        </div><br>
                     </div>
                 </div>
                 <br><br><br>

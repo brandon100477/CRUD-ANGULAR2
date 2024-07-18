@@ -19,7 +19,7 @@
             $_SESSION['loggedin'] = true;
             $_SESSION['name'] = $hashedPassword['name'];
             $_SESSION['email'] = $email;
-            $redirectUrl = APP_URL .'dashboard';
+            $redirectUrl = APP_URL .'dashboard'; //URL para redirigir después de una sesión valida.
             echo json_encode(['status' => 'success', 'message' => 'Inicio de sesión exitoso', 'redirectUrl' => $redirectUrl]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Correo electrónico o contraseña incorrectos, intentelo nuevamente por favor.']);

@@ -8,7 +8,7 @@
     if(file_exists(__DIR__."/../../config/server.php")){
         require_once __DIR__."/../../config/server.php";
     }
-    #Modelo principal para la conexión a la base de datos.
+    #Modelo principal.
     class mainModel{ 
         const db_server = DB_SERVER;
         const db_name = DB_NAME;
@@ -51,6 +51,7 @@
         }
 
         /* ------------------------------------------------------------------------------------- */
+        //Función para insertar datos a la DB
         public static function insertar($tabla, $data){
             try {
                 $conn = self::connect();
@@ -69,6 +70,7 @@
                     return "fallo ".$e->getMessage();
                     }
         }
+        //Función para extraer los datos de la DB
         public static function mostrar($tabla){
             $conn = mainModel::connect();
             $consulta = "SELECT * FROM ".$tabla.";";
@@ -78,6 +80,7 @@
             }
             return self::$datos;
         }
+        //Función para mostrar el dato antes de actualizarlo.
         public static function mostrarActualizar($tabla, $condicion){
             $conn = mainModel::connect();
             $consulta = "SELECT * FROM ".$tabla." WHERE id = " .$condicion.";";
@@ -87,6 +90,7 @@
             }
             return self::$datos;
         }
+        //Función para actualizar los datos en la DB.
         public static function actualizar($tabla, $data, $condicion){
             $conn = mainModel::connect();
             $sql = "UPDATE $tabla SET ";
@@ -119,6 +123,7 @@
                 throw new Exception("Error al actualizar: " . $stmt->errorInfo());
             }
         }
+        //Función para eliminar los datos de la DB.
         public static function eliminar($tabla, $condicion){
             $conn = mainModel::connect();
             $eli="DELETE FROM ".$tabla." WHERE ".$condicion.";";
@@ -129,6 +134,7 @@
                 return false;
             }
         }
+        //Función para verificar si un email existe en la DB.
         public static function getHashedPasswordByEmail($email) {
             $conn = self::connect();
             $stmt = $conn->prepare("SELECT * FROM person WHERE email = :email");

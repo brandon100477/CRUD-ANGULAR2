@@ -59,20 +59,16 @@
           <span ng-show="!pass2.length">Por favor confirmar la contraseña.</span>
           <span ng-show="pass2.length && pass2 !== pass">Lo siento, las contraseñas no coinciden.</span>
         </div>
-        <div class="input-field" ng-class="{ 'error': !pet.length }">
-          <input
-            required=""
-            autocomplete="off"
-            type="text"
-            name="text"
-            id="password"
-            ng-model="pet"
-          />
-          <label for="username">Pet</label>
-          <br>
-          <span ng-show="!pet.length">Escribe el tipo de mascota que tienes.</span>
-        </div>
-    
+        <div class="user-box" ng-class="{ 'error': !pet.length }">
+                <select name="pet" ng-model="pet" id="pet">
+                    <option value="">Seleccine una mascota</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Loro">Loro</option>
+                    <option value="Pez">Pez</option>
+                </select><br>
+                <span ng-show="!pet.length">Seleccione el tipo de mascota que tienes.</span>
+            </div><br>
         <div class="btn-container">
           <button type="submit" name="registro" class="btn">Submit</button>
         </div>

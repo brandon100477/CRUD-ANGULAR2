@@ -1,9 +1,9 @@
 <?php
     session_start();
-/*     if (!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
-        header('Location:'. APP_URL); // Redirige al usuario a la página de login
+    if (!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
+        header('Location:'. APP_URL); // Redirige al usuario a la página de login si no está autenticado.
         exit;
-    } */
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es" ng-app="routingApp">

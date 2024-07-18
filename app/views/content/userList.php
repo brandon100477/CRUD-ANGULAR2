@@ -19,8 +19,8 @@
                     <td><p>{{us.name}}</p></td>
                     <td><p>{{us.email}}</p></td>
                     <td><p>{{us.pet}}</p></td>
-                    <td><a href="#!/Update/{{us.id}}" ng-click="goToUpdate(us.id)"><p>Para actualizar</p></a></td>
-                    <td><button ng-click="deleteItem(us.id)"><p>Delete</p></button></td>
+                    <td><a href="#!/Update/{{us.id}}" ng-click="goToUpdate(us.id)"><p><img width="24" height="24" src="https://img.icons8.com/fluency/48/available-updates.png" alt="available-updates"/></p></a></td>
+                    <td><button ng-click="deleteItem(us.id)"><p><img width="24" height="24" src="https://img.icons8.com/color/24/delete-forever.png" alt="delete-forever"/></p></button></td>
                 </tr>
             </tbody>
         </table>
