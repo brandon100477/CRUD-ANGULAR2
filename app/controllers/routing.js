@@ -6,6 +6,7 @@ routing.config(['$routeProvider', function($routeProvider) {
       .when('/userList', { templateUrl: './app/views/content/userList.php' })
       .when( '/', { templateUrl: './app/views/content/home.php' })
       .when( '/dashboard', { templateUrl: './app/views/content/home.php' })
+      .when( '/Update/:id', { templateUrl: './app/views/content/update.php' })
       .otherwise({ redirectTo: '/URL-No_encontrada', templateUrl: './app/views/content/userNew.php' });
 }]);
 
@@ -57,15 +58,14 @@ routing.controller('registerController', function ($scope, $http) {
       };
     });
     routing.controller('listController', function ($scope, $http) {
-        $scope.users = [];
-        console.log("Entra aqui");
-        $scope.fetchUsers = function() {
-            
-            $http.get('./app/controllers/listController.php')
-                .then(function(response) {
-                    $scope.users = response.data; // Asigna los datos recibidos a la variable users
-                }, function(error) {
-                    console.error("Error fetching users:", error);
-                });
-        };
+      $scope.data = [];
+      $http.post('./app/controllers/listController.php').then(function(response) {
+        $scope.data = response.data;
+        }, function(error) {
+            console.error('Error:', error);
+        });
     });
+    routing.controller('updateController',['$scope','$http', '$routeParams', function ($scope, $http, $routeParams) {
+      var userId = $routeParams.id;
+      console.log(userId);
+    }]);

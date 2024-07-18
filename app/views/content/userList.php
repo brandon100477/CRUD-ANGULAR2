@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="./app/static/css/userList.css">
 <script src="./app/controllers/routing.js"></script>
-<div ng-app="registerAngular">
+<div ng-app="routingApp">
     <div class="container" ng-controller="listController">
         <table id="miTabla">
             <thead>
@@ -13,16 +13,15 @@
                     <th>Delete</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr ng-repeat="user in users">
-                    <td>{{user.id}}</td>
-                    <td>{{user.name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.pet}}</td>
-                    <td><a href="#">Para actualizar</a></td>
-                    <td><button>Delete</button></td>
+            <tbody ng-repeat="user in data">
+                <tr ng-repeat="us in user">
+                    <td><p>{{ us.id }}</p></td>
+                    <td><p>{{us.name}}</p></td>
+                    <td><p>{{us.email}}</p></td>
+                    <td><p>{{us.pet}}</p></td>
+                    <td><a href="#!/Update/{{us.id}}" ng-click="goToUpdate(us.id)"><p>Para actualizar</p></a></td>
+                    <td><button ng-click="goToUpdate(us.id)"><p>Delete</p></button></td>
                 </tr>
-                <!-- Aquí irán las filas de datos -->
             </tbody>
         </table>
     </div>

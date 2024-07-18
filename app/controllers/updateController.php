@@ -7,7 +7,7 @@ use Exception;
     header('Content-Type: application/json');
     $data = json_decode(file_get_contents('php://input'), true);
     $model = new mainModel();
-    try{
+    /* try{
         $listData = mainModel::mostrar("person");
         error_log(print_r($listData, true)); // Agrega esto para depurar
         echo json_encode($listData);
@@ -15,5 +15,5 @@ use Exception;
         error_log($e->getMessage());
         http_response_code(500);
         echo json_encode(["status" => "error", "message" => "An error occurred"]);
-    }
+    } */
 ?>

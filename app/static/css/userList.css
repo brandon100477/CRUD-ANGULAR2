@@ -10,17 +10,16 @@ th, td {
     width: auto;
     padding: 10px 15px 5px 10px;
     border: 1px solid #ddd;
-    color: black;
     text-align: center;
     align-items: center;
     justify-items: center;
+    background-color: #ddd;
 }
 th {
     background-color: #263a92;
 }
-
-tbody tr:nth-child(odd) {
-    background-color: #fff;
+p {
+    color:black !important;
 }
 .acciones {
     display: flex;
