@@ -2,6 +2,7 @@
     namespace app\models;
     use \PDO;
     use PDOException;
+    use Exception;
 
     #Confirmación del archivo server.php
     if(file_exists(__DIR__."/../../config/server.php")){
@@ -77,14 +78,45 @@
             }
             return self::$datos;
         }
+        public static function mostrarActualizar($tabla, $condicion){
+            $conn = mainModel::connect();
+            $consulta = "SELECT * FROM ".$tabla." WHERE id = " .$condicion.";";
+            $resultado = $conn->query($consulta);
+            while($filas =$resultado->fetchAll(PDO::FETCH_ASSOC)){
+                self::$datos[] = $filas;
+            }
+            return self::$datos;
+        }
         public static function actualizar($tabla, $data, $condicion){
             $conn = mainModel::connect();
-            $consult ="UPDATE ". $tabla." SET ". $data ." WHERE ".$condicion;
-            $result= $conn->query($consult);
-            if($result){
+            $sql = "UPDATE $tabla SET ";
+            $params = [];
+
+            //Itera sobre los datos para construir la parte SET de la consulta
+            foreach ($data as $key => &$value) {
+                $sql .= "$key = :$key, ";
+                $params[":$key"] = $value;
+            }
+
+            //Elimina la última coma y espacios innecesarios
+            $sql = rtrim($sql, ', ');
+
+            //Agrega la condición WHERE
+            $sql .= " WHERE $condicion";
+
+            //Prepara la declaración
+            $stmt = $conn->prepare($sql);
+
+            //Vincula los parámetros
+            foreach ($params as $param => $value) {
+                $stmt->bindValue($param, $value);
+            }
+
+            //Ejecuta la consulta
+            if ($stmt->execute()) {
                 return true;
-            }else{
-                return false;
+            } else {
+                throw new Exception("Error al actualizar: " . $stmt->errorInfo());
             }
         }
         public static function eliminar($tabla, $condicion){

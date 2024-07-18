@@ -64,8 +64,56 @@ routing.controller('registerController', function ($scope, $http) {
         }, function(error) {
             console.error('Error:', error);
         });
+        $scope.deleteItem = function(itemId) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Advertencia',
+            text: 'Estas apunto de eliminar el dato: ' + itemId,
+            confirmButtonText: 'Si, por favor.'
+        })
+        }
     });
-    routing.controller('updateController',['$scope','$http', '$routeParams', function ($scope, $http, $routeParams) {
+    routing.controller('preUpdateController',['$scope','$http', '$routeParams', function ($scope, $http, $routeParams) {
       var userId = $routeParams.id;
-      console.log(userId);
+      $http.get('./app/controllers/preUpdateController.php?id=' + userId).then(function(response) {
+        $scope.user = response.data; 
+      }, function(error) {
+        console.error('Error:', error);
+      });
+      $scope.submitForm = function() {
+        var formData = {
+          modulo_user: 'actualizar',
+          id: $scope.user[0][0].id,
+          name: $scope.user[0][0].name,
+          email: $scope.user[0][0].email,
+          pet: $scope.user[0][0].pet
+        };
+        
+        $http.post('./app/controllers/updateController.php', formData)
+        .then(function(response) {
+          if (response.data.status === 'success') {
+            Swal.fire({
+                icon: "success",
+                title: "Éxito",
+                text: response.data.message,
+            }).then(() => {
+              // Recargar la página después de cerrar la alerta de éxito
+              window.location.reload();
+            });
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: response.data.message,
+            });
+        }
+        }, function(error) {
+          console.error("Error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Ha ocurrido un error al enviar los datos.",
+          });
+        });
+      }
     }]);

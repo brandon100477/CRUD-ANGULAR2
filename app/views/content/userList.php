@@ -20,7 +20,7 @@
                     <td><p>{{us.email}}</p></td>
                     <td><p>{{us.pet}}</p></td>
                     <td><a href="#!/Update/{{us.id}}" ng-click="goToUpdate(us.id)"><p>Para actualizar</p></a></td>
-                    <td><button ng-click="goToUpdate(us.id)"><p>Delete</p></button></td>
+                    <td><button ng-click="deleteItem(us.id)"><p>Delete</p></button></td>
                 </tr>
             </tbody>
         </table>
